@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-// Lista de tareas simuladas
-const tareas = [
-  { id: 1, titulo: "Comprar pan", estado: "pendiente" },
-  { id: 2, titulo: "Estudiar Node.js", estado: "en progreso" },
-  { id: 3, titulo: "Lavar la loza", estado: "completada" }
-];
+const { obtenerTareas, crearTarea, actualizarTarea, eliminarTarea } = require('../controllers/task.controller');
 
-router.get('/', (req, res) => {
-  res.json(tareas);
-});
+// GET /tasks
+router.get('/', obtenerTareas);
+
+// POST /tasks
+router.post('/', crearTarea);
+
+// PUT /tasks
+router.put('/:id', actualizarTarea);
+
+// DELETE /tasks
+router.delete('/:id', eliminarTarea);
 
 module.exports = router;
