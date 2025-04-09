@@ -1,7 +1,9 @@
 const express = require('express');
+const { swaggerUi, swaggerSpec } = require('./swagger');
 const app = express();
 
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //Importar rutas
 const taskRoutes = require('./routes/tasks.routes');

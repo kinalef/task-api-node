@@ -13,6 +13,17 @@ const obtenerTareas = async (req, res) => {
       res.status(500).json({ mensaje: 'Error al obtener tareas' });
     }
   };
+  // GET /tasks/:id
+const obtenerTareasPorId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const tarea = await Tarea.findByPk(id);
+        res.status(200).json(tarea);
+    } catch (error) {
+        console.error('Error al obtener tarea:', error);
+        res.status(500).json({ mensaje: 'Error al obtener tarea' });
+    }
+  };
 // POST /tasks
 const crearTarea = async (req, res) => {
     try {
@@ -74,6 +85,7 @@ const crearTarea = async (req, res) => {
 // Exportar funciones
 module.exports = {
     obtenerTareas,
+    obtenerTareasPorId,
     crearTarea,
     actualizarTarea,
     eliminarTarea
