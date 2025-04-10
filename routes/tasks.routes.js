@@ -2,23 +2,30 @@ const express = require('express');
 const router = express.Router();
 
 const { obtenerTareas,obtenerTareasPorId, crearTarea, actualizarTarea, eliminarTarea } = require('../controllers/task.controller');
+const verificarToken = require('../middlewares/verificarToken');
 
 /**
  * @swagger
- * /tasks:
+ * /api/tasks:
  *   get:
  *     summary: Obtener todas las tareas
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [Tareas]
  *     responses:
  *       200:
  *         description: Lista de tareas
  */
-router.get('/', obtenerTareas);
+router.get('/', verificarToken, obtenerTareas);
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   get:
  *     summary: Obtener una tarea por ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [Tareas]
  *     parameters:
  *       - in: path
  *         name: id
@@ -31,13 +38,16 @@ router.get('/', obtenerTareas);
  *       404:
  *         description: Tarea no encontrada
  */
-router.get('/:id', obtenerTareasPorId);
+router.get('/:id', verificarToken, obtenerTareasPorId);
 
 /**
  * @swagger
- * /tasks:
+ * /api/tasks:
  *   post:
  *     summary: Crear una nueva tarea
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [Tareas]
  *     requestBody:
  *       required: true
  *       content:
@@ -53,13 +63,16 @@ router.get('/:id', obtenerTareasPorId);
  *       201:
  *         description: Tarea creada
  */
-router.post('/', crearTarea);
+router.post('/',verificarToken, crearTarea);
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   put:
  *     summary: Actualizar una tarea existente
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [Tareas]
  *     parameters:
  *       - in: path
  *         name: id
@@ -87,9 +100,12 @@ router.put('/:id', actualizarTarea);
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   delete:
  *     summary: Eliminar una tarea
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [Tareas]
  *     parameters:
  *       - in: path
  *         name: id
@@ -103,6 +119,6 @@ router.put('/:id', actualizarTarea);
  *         description: Tarea no encontrada
  */
 
-router.delete('/:id', eliminarTarea);
+router.delete('/:id',verificarToken, eliminarTarea);
 
 module.exports = router;
